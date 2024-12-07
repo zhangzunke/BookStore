@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Users
 {
-    public record Email(string value);
+    public record Email(string Value);
 }

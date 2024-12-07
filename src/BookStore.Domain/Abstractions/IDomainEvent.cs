@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 
-namespace BookStore.Domain.Users
+namespace BookStore.Domain.Abstractions
 {
-    public record FirstName(string Value);
+    public interface IDomainEvent : INotification
+    {
+    }
 }

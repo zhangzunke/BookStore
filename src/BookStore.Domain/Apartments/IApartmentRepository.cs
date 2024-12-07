@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Apartments
 {
-    public record Name(string Value);
+    public interface IApartmentRepository
+    {
+        Task<Apartment?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    }
 }

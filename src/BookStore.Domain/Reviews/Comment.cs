@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Domain.Users
+namespace BookStore.Domain.Reviews
 {
-    public record FirstName(string Value);
+    public record Comment(string Value);
 }
