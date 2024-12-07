@@ -3,9 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{45D608DF-A75F-4244-82BD-D5D8730BB7D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{96E65FD1-AD0E-47A8-AACE-58C5F93C24A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Domain", "src\BookStore.Domain\BookStore.Domain.csproj", "{691DA758-AB40-4429-8E29-F50E5513CA03}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{691DA758-AB40-4429-8E29-F50E5513CA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691DA758-AB40-4429-8E29-F50E5513CA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691DA758-AB40-4429-8E29-F50E5513CA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691DA758-AB40-4429-8E29-F50E5513CA03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{691DA758-AB40-4429-8E29-F50E5513CA03} = {45D608DF-A75F-4244-82BD-D5D8730BB7D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFA41366-A231-4839-9743-0B7D248E6ECB}
