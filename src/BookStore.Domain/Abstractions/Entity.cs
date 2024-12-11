@@ -16,6 +16,6 @@ namespace BookStore.Domain.Abstractions
         public Guid Id { get;  init; }
         public IReadOnlyList<IDomainEvent> GetDomainEvents() => _domainEvents;
         public void ClearDomainEvents() => _domainEvents.Clear();
-        protected void RaiseDomainEvent(IDomainEvent domainEvenet) => _domainEvents.Add(domainEvenet);
+        protected void RaiseDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
     }
 }
