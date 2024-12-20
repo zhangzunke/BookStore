@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{96E65FD1-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Domain", "src\BookStore.Domain\BookStore.Domain.csproj", "{691DA758-AB40-4429-8E29-F50E5513CA03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Application", "src\BookStore.Application\BookStore.Application.csproj", "{B21FC2F9-02EC-4013-BBDD-D8DFD0DB0121}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Application", "src\BookStore.Application\BookStore.Application.csproj", "{B21FC2F9-02EC-4013-BBDD-D8DFD0DB0121}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Infrastructure", "src\BookStore.Infrastructure\BookStore.Infrastructure.csproj", "{8141EFC7-BD42-4EE3-AAAF-CD8051C4A609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{B21FC2F9-02EC-4013-BBDD-D8DFD0DB0121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21FC2F9-02EC-4013-BBDD-D8DFD0DB0121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21FC2F9-02EC-4013-BBDD-D8DFD0DB0121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8141EFC7-BD42-4EE3-AAAF-CD8051C4A609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8141EFC7-BD42-4EE3-AAAF-CD8051C4A609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8141EFC7-BD42-4EE3-AAAF-CD8051C4A609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8141EFC7-BD42-4EE3-AAAF-CD8051C4A609}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{691DA758-AB40-4429-8E29-F50E5513CA03} = {45D608DF-A75F-4244-82BD-D5D8730BB7D2}
 		{B21FC2F9-02EC-4013-BBDD-D8DFD0DB0121} = {45D608DF-A75F-4244-82BD-D5D8730BB7D2}
+		{8141EFC7-BD42-4EE3-AAAF-CD8051C4A609} = {45D608DF-A75F-4244-82BD-D5D8730BB7D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFA41366-A231-4839-9743-0B7D248E6ECB}

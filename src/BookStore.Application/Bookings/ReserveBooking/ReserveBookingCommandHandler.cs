@@ -1,5 +1,6 @@
 ﻿using BookStore.Application.Abstractions.Clock;
 using BookStore.Application.Abstractions.Messaging;
+using BookStore.Application.Exceptions;
 using BookStore.Domain.Abstractions;
 using BookStore.Domain.Apartments;
 using BookStore.Domain.Bookings;
@@ -59,18 +60,26 @@ namespace BookStore.Application.Bookings.ReserveBooking
                 return Result.Failure<Guid>(BookingErrors.Overlap);
             }
 
-            var booking = Booking.Reserve(
+            try
+            {
+                var booking = Booking.Reserve(
                 apartment,
                 user.Id,
                 duration,
                 utcNow: _dateTimeProvider.UtcNow,
                 _pricingService
                 );
-            _bookingRepository.Add(booking);
+                _bookingRepository.Add(booking);
 
-            await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.SaveChangesAsync();
 
-            return booking.Id;
+                return booking.Id;
+            }
+            catch (ConcurrencyException)
+            {
+                return Result.Failure<Guid>(BookingErrors.Overlap);
+            }
+            
         }
     }
 }
