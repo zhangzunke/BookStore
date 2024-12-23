@@ -30,7 +30,8 @@ namespace BookStore.Infrastructure.Configurations
                 .HasForeignKey(x => x.ApartmentId);
             builder.HasOne<Booking>()
                 .WithMany()
-                .HasForeignKey(x => x.BookingId);
+                .HasForeignKey(x => x.BookingId)
+                .OnDelete(DeleteBehavior.NoAction);
             builder.HasOne<User>()
                 .WithMany()
                 .HasForeignKey(x => x.UserId);

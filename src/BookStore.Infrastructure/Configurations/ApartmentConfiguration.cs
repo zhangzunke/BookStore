@@ -37,7 +37,7 @@ namespace BookStore.Infrastructure.Configurations
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
             });
 
-            builder.Property<uint>("Version").IsRowVersion();
+            builder.Property<byte[]>("Version").IsRowVersion();
         }
     }
 }

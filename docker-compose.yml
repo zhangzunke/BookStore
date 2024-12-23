@@ -1,0 +1,25 @@
+services:
+  bookstore.api:
+    image: ${DOCKER_REGISTRY-}bookstoreapi
+    container_name: BookStore.Api
+    build:
+      context: .
+      dockerfile: src/BookStore.Api/Dockerfile
+    depends_on:
+      - bookstore-db
+
+  bookstore-db:
+    image: postgres:latest
+    container_name: BookStore.Db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=bookify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+    driver: local
