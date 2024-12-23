@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     app.ApplyMigrations();
-    app.SeedData();
+    // app.SeedData();
 }
 
 app.UseHttpsRedirection();

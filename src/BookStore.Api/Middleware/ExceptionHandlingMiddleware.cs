@@ -15,6 +15,7 @@ namespace BookStore.Api.Middleware
             ILogger<ExceptionHandlingMiddleware> logger)
         {
             _logger = logger;
+            _next = next;
         }
 
         public async Task InvokeAsync(HttpContext context)

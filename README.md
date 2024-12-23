@@ -1,0 +1,1 @@
+dotnet ef migrations add Create_Database -p ./src/BookStore.Infrastructure -s ./src/BookStore.Api

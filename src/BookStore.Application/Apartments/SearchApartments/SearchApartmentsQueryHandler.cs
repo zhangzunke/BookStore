@@ -36,13 +36,13 @@ namespace BookStore.Application.Apartments.SearchApartments
                   a.Id,
                   a.Name,
                   a.Description,
-                  a.Price,
-                  a.Currency,
-                  a.Country,
-                  a.State,
-                  a.ZipCode,
-                  a.City,
-                  a.Street
+                  a.Price_Amount AS Price,
+                  a.Price_Currency AS Currency,
+                  a.Address_Country AS Country,
+                  a.Address_State AS State,
+                  a.Address_ZipCode AS ZipCode,
+                  a.Address_City AS City,
+                  a.Address_Street AS Street
                 FROM Apartments AS a
                 WHERE NOT EXISTS
                 (
@@ -50,8 +50,8 @@ namespace BookStore.Application.Apartments.SearchApartments
                     FROM Bookings AS b
                     WHERE 
                         b.ApartmentId = a.Id AND
-                        b.DurationStart <= @EndDate AND
-                        b.DurationEnd >= @StartDate AND
+                        b.Duration_Start <= @EndDate AND
+                        b.Duration_End >= @StartDate AND
                         b.Status IN @ActiveBookingStatuses
                 )
                 """;
