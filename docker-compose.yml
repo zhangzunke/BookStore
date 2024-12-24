@@ -1,25 +1,37 @@
 services:
-  bookstore.api:
-    image: ${DOCKER_REGISTRY-}bookstoreapi
-    container_name: BookStore.Api
-    build:
-      context: .
-      dockerfile: src/BookStore.Api/Dockerfile
-    depends_on:
-      - bookstore-db
-
-  bookstore-db:
-    image: postgres:latest
-    container_name: BookStore.Db
-    ports:
-      - "5432:5432"
+  bookify-idp:
+    image: quay.io/keycloak/keycloak:26.0.7
+    container_name: Bookify.Identity
+    command: start-dev --import-realm
     environment:
-      - POSTGRES_DB=bookify
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./.containers/identity:/opt/keycloak/data
+      - ./.files/bookify-realm-export.json:/opt/keycloak/data/import/realm.json
+    ports:
+      - 18080:8080
+#  bookstore.api:
+#    image: ${DOCKER_REGISTRY-}bookstoreapi
+#    container_name: BookStore.Api
+#     build:
+#       context: .
+#       dockerfile: src/BookStore.Api/Dockerfile
+#     depends_on:
+#       - bookstore-db
 
-volumes:
-  db-data:
-    driver: local
+#   bookstore-db:
+#     image: postgres:latest
+#     container_name: BookStore.Db
+#     ports:
+#       - "5432:5432"
+#     environment:
+#       - POSTGRES_DB=bookify
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#     volumes:
+#       - db-data:/var/lib/postgresql/data
+
+# volumes:
+#   db-data:
+#     driver: local

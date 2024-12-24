@@ -1,11 +1,13 @@
 ﻿using BookStore.Application.Apartments.SearchApartments;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Api.Controllers.Apartments
 {
+    [Authorize]
     [Route("api/apartments")]
     [ApiController]
     public class ApartmentsController : ControllerBase
