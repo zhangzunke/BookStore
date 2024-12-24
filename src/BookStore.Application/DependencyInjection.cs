@@ -17,6 +17,7 @@ namespace BookStore.Application
             });
 
             services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
+
             services.AddTransient<PricingService>();
 
             return services;
