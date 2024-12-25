@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Users.LoginUser;
+﻿using BookStore.Application.Users.GetLoggedInUser;
+using BookStore.Application.Users.LoginUser;
 using BookStore.Application.Users.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,14 @@ namespace BookStore.Api.Controllers.Users
         public UsersController(ISender sender)
         {
             _sender = sender;
+        }
+
+        [HttpGet("me")]
+        public async Task<IActionResult> GetLoggedInUser(CancellationToken cancellationToken)
+        {
+            var query = new GetLoggedInUserQuery();
+            var result = await _sender.Send(query, cancellationToken);
+            return Ok(result.Value);
         }
 
         [AllowAnonymous]

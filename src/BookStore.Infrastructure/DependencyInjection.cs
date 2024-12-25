@@ -7,16 +7,21 @@ using BookStore.Domain.Apartments;
 using BookStore.Domain.Bookings;
 using BookStore.Domain.Users;
 using BookStore.Infrastructure.Authentication;
+using BookStore.Infrastructure.Authorization;
 using BookStore.Infrastructure.Clock;
 using BookStore.Infrastructure.Data;
 using BookStore.Infrastructure.Email;
 using BookStore.Infrastructure.Repositories;
 using Dapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using AuthenticationOptions = BookStore.Infrastructure.Authentication.AuthenticationOptions;
+using AuthenticationService = BookStore.Infrastructure.Authentication.AuthenticationService;
+using IAuthenticationService = BookStore.Application.Abstractions.Authentication.IAuthenticationService;
 
 namespace BookStore.Infrastructure
 {
@@ -30,6 +35,7 @@ namespace BookStore.Infrastructure
 
             AddPersistence(services, configuration);
             AddAuthentication(services, configuration);
+            AddAuthorization(services);
 
             return services;
         }
@@ -83,6 +89,15 @@ namespace BookStore.Infrastructure
                 var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
                 httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
             });
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserContext, UserContext>();
+        }
+
+        private static void AddAuthorization(IServiceCollection services)
+        {
+            services.AddScoped<AuthorizationService>();
+            services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
         }
     }
 }
