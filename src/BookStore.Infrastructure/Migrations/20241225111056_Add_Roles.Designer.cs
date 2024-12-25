@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241225081417_Add_Roles")]
+    [Migration("20241225111056_Add_Roles")]
     partial class Add_Roles
     {
         /// <inheritdoc />
@@ -193,13 +193,13 @@ namespace BookStore.Infrastructure.Migrations
 
             modelBuilder.Entity("UserRoles", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<int>("RolesId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UsersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("RoleId", "UsersId");
+                    b.HasKey("RolesId", "UsersId");
 
                     b.HasIndex("UsersId");
 
@@ -445,7 +445,7 @@ namespace BookStore.Infrastructure.Migrations
                 {
                     b.HasOne("BookStore.Domain.Users.Role", null)
                         .WithMany()
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -18,7 +18,7 @@ namespace BookStore.Infrastructure.Configurations
             builder.HasKey(x => x.Id);
 
             builder.HasMany(role => role.Users)
-               .WithMany()
+               .WithMany(u => u.Roles)
                .UsingEntity("UserRoles");
 
             builder.HasData(Role.Registered);

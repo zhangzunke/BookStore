@@ -20,6 +20,7 @@ namespace BookStore.Api.Controllers.Users
         }
 
         [HttpGet("me")]
+        [Authorize]
         public async Task<IActionResult> GetLoggedInUser(CancellationToken cancellationToken)
         {
             var query = new GetLoggedInUserQuery();
