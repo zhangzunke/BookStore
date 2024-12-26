@@ -1,6 +1,7 @@
 ﻿using BookStore.Application.Users.GetLoggedInUser;
 using BookStore.Application.Users.LoginUser;
 using BookStore.Application.Users.RegisterUser;
+using BookStore.Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +21,7 @@ namespace BookStore.Api.Controllers.Users
         }
 
         [HttpGet("me")]
-        [Authorize]
+        [HasPermission(Permissions.UsersRead)]
         public async Task<IActionResult> GetLoggedInUser(CancellationToken cancellationToken)
         {
             var query = new GetLoggedInUserQuery();

@@ -21,6 +21,10 @@ namespace BookStore.Infrastructure.Configurations
                .WithMany(u => u.Roles)
                .UsingEntity("UserRoles");
 
+            builder.HasMany(role => role.Permissions)
+                .WithMany()
+                .UsingEntity<RolePermission>();
+
             builder.HasData(Role.Registered);
         }
     }

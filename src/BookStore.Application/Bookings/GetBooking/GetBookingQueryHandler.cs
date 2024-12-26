@@ -1,6 +1,8 @@
-﻿using BookStore.Application.Abstractions.Data;
+﻿using BookStore.Application.Abstractions.Authentication;
+using BookStore.Application.Abstractions.Data;
 using BookStore.Application.Abstractions.Messaging;
 using BookStore.Domain.Abstractions;
+using BookStore.Domain.Bookings;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,14 @@ namespace BookStore.Application.Bookings.GetBooking
     internal sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, BookingResponse>
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        private readonly IUserContext _userContext;
 
-        public GetBookingQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
+        public GetBookingQueryHandler(
+            ISqlConnectionFactory sqlConnectionFactory,
+            IUserContext userContext)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
+            _userContext = userContext;
         }
 
         public async Task<Result<BookingResponse>> Handle(GetBookingQuery request, CancellationToken cancellationToken)
@@ -51,6 +57,11 @@ namespace BookStore.Application.Bookings.GetBooking
                 {
                     request.BookingId
                 });
+
+            if (booking is null || booking.UserId != _userContext.UserId)
+            {
+                return Result.Failure<BookingResponse>(BookingErrors.NotFound);
+            }
 
             return booking;
         }
