@@ -5,6 +5,7 @@ using BookStore.Application.Abstractions.Email;
 using BookStore.Domain.Abstractions;
 using BookStore.Domain.Apartments;
 using BookStore.Domain.Bookings;
+using BookStore.Domain.Reviews;
 using BookStore.Domain.Users;
 using BookStore.Infrastructure.Authentication;
 using BookStore.Infrastructure.Authorization;
@@ -55,6 +56,8 @@ namespace BookStore.Infrastructure
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
 
             services.AddScoped<IBookingRepository, BookingRepository>();
+
+            services.AddScoped<IReviewRepository, ReviewRepository>();
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 

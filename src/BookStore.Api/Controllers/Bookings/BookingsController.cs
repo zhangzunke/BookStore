@@ -30,13 +30,13 @@ namespace BookStore.Api.Controllers.Bookings
             ReserveBookingRequest request,
             CancellationToken cancellationToken)
         {
-            var comand = new ReserveBookingCommand(
+            var command = new ReserveBookingCommand(
                 request.ApartmentId, 
                 request.UserId, 
                 request.StartDate, 
                 request.EndDate);
 
-            var result = await _sender.Send(comand, cancellationToken);
+            var result = await _sender.Send(command, cancellationToken);
             if(result.IsFailure)
             {
                 return BadRequest(result.Error);
