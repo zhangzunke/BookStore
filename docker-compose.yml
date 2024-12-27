@@ -11,6 +11,22 @@ services:
       - ./.files/bookify-realm-export.json:/opt/keycloak/data/import/realm.json
     ports:
       - 18080:8080
+
+  bookify-seq:
+    image: datalust/seq:latest
+    container_name: Bookify.Seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 18081:80
+
+  bookify-redis:
+    image: redis:latest
+    container_name: Bookify.Redis
+    restart: always
+    ports:
+      - 6379:6379
 #  bookstore.api:
 #    image: ${DOCKER_REGISTRY-}bookstoreapi
 #    container_name: BookStore.Api
