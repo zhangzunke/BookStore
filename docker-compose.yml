@@ -26,7 +26,7 @@ services:
     container_name: Bookify.Redis
     restart: always
     ports:
-      - 6379:6379
+      - '6379:6379'
 #  bookstore.api:
 #    image: ${DOCKER_REGISTRY-}bookstoreapi
 #    container_name: BookStore.Api

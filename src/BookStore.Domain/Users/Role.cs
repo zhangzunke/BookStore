@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BookStore.Domain.Users
@@ -10,6 +11,7 @@ namespace BookStore.Domain.Users
     {
         public static readonly Role Registered = new(1, "Registered");
 
+        [JsonConstructor]
         private Role(int id, string name)
         {
             Id = id;

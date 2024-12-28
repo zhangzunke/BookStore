@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Abstractions.Authentication;
+using BookStore.Application.Abstractions.Caching;
 using BookStore.Application.Abstractions.Clock;
 using BookStore.Application.Abstractions.Data;
 using BookStore.Application.Abstractions.Email;
@@ -9,6 +10,7 @@ using BookStore.Domain.Reviews;
 using BookStore.Domain.Users;
 using BookStore.Infrastructure.Authentication;
 using BookStore.Infrastructure.Authorization;
+using BookStore.Infrastructure.Caching;
 using BookStore.Infrastructure.Clock;
 using BookStore.Infrastructure.Data;
 using BookStore.Infrastructure.Email;
@@ -36,6 +38,7 @@ namespace BookStore.Infrastructure
             services.AddTransient<IEmailService, EmailService>();
 
             AddPersistence(services, configuration);
+            AddCaching(services, configuration);
             AddAuthentication(services, configuration);
             AddAuthorization(services);
 
@@ -104,6 +107,14 @@ namespace BookStore.Infrastructure
             services.AddTransient<IClaimsTransformation, CustomClaimsTransformation>();
             services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
             services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+        }
+
+        private static void AddCaching(IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("Cache") ??
+                throw new ArgumentNullException(nameof(configuration));
+            services.AddStackExchangeRedisCache(options => options.Configuration = connectionString);
+            services.AddSingleton<ICacheService, CacheService>();
         }
     }
 }
