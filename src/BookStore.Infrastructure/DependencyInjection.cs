@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Abstractions.Authentication;
+﻿using Asp.Versioning;
+using BookStore.Application.Abstractions.Authentication;
 using BookStore.Application.Abstractions.Caching;
 using BookStore.Application.Abstractions.Clock;
 using BookStore.Application.Abstractions.Data;
@@ -14,6 +15,8 @@ using BookStore.Infrastructure.Caching;
 using BookStore.Infrastructure.Clock;
 using BookStore.Infrastructure.Data;
 using BookStore.Infrastructure.Email;
+using BookStore.Infrastructure.HealthChecks;
+using BookStore.Infrastructure.Outbox;
 using BookStore.Infrastructure.Repositories;
 using Dapper;
 using Microsoft.AspNetCore.Authentication;
@@ -23,6 +26,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Quartz;
 using AuthenticationOptions = BookStore.Infrastructure.Authentication.AuthenticationOptions;
 using AuthenticationService = BookStore.Infrastructure.Authentication.AuthenticationService;
 using IAuthenticationService = BookStore.Application.Abstractions.Authentication.IAuthenticationService;
@@ -41,7 +45,9 @@ namespace BookStore.Infrastructure
             AddCaching(services, configuration);
             AddAuthentication(services, configuration);
             AddAuthorization(services);
-
+            AddHealthChecks(services, configuration);
+            AddApiVersioning(services);
+            AddBackgroundJobs(services, configuration);
             return services;
         }
 
@@ -115,6 +121,47 @@ namespace BookStore.Infrastructure
                 throw new ArgumentNullException(nameof(configuration));
             services.AddStackExchangeRedisCache(options => options.Configuration = connectionString);
             services.AddSingleton<ICacheService, CacheService>();
+        }
+
+        private static void AddHealthChecks(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddTransient(sp =>
+            {
+                var httpClient = sp.GetRequiredService<HttpClient>();
+                var keycloakUrl = configuration["Keycloak:BaseUrl"]!;
+                return new KeycloakHealthCheck(httpClient, keycloakUrl);
+            });
+
+            services.AddHealthChecks()
+                .AddSqlServer(configuration.GetConnectionString("Database")!)
+                .AddRedis(configuration.GetConnectionString("Cache")!)
+                .AddCheck<KeycloakHealthCheck>("keycloak", timeout: TimeSpan.FromSeconds(30));
+                //.AddUrlGroup(new Uri(configuration["Keycloak:BaseUrl"]!), HttpMethod.Get, "keycloak", timeout: TimeSpan.FromSeconds(60));
+        }
+
+        private static void AddApiVersioning(IServiceCollection services)
+        {
+            services
+                .AddApiVersioning(options =>
+                {
+                    options.DefaultApiVersion = new ApiVersion(1);
+                    options.ReportApiVersions = true;
+                    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+                })
+                .AddMvc()
+                .AddApiExplorer(options =>
+                {
+                    options.GroupNameFormat = "'v'V";
+                    options.SubstituteApiVersionInUrl = true;
+                });
+        }
+
+        private static void AddBackgroundJobs(IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<OutboxOptions>(configuration.GetSection("Outbox"));
+            services.AddQuartz();
+            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+            services.ConfigureOptions<ProcessOutboxMessagesJobSetup>();
         }
     }
 }

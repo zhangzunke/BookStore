@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Reviews.AddReview;
+﻿using Asp.Versioning;
+using BookStore.Application.Reviews.AddReview;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookStore.Api.Controllers.Reviews
 {
     [Authorize]
-    [Route("api/reviews")]
+    [ApiVersion(ApiVersions.V1)]
+    [Route("api/v{version:apiVersion}/reviews")]
     [ApiController]
     public class ReviewsController : ControllerBase
     {

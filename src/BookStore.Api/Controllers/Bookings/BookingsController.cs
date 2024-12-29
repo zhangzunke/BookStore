@@ -1,14 +1,18 @@
-﻿using BookStore.Application.Bookings.GetBooking;
+﻿using Asp.Versioning;
+using BookStore.Application.Bookings.GetBooking;
 using BookStore.Application.Bookings.ReserveBooking;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.Xml;
 
 namespace BookStore.Api.Controllers.Bookings
 {
-    [Route("api/bookings")]
+    [ApiVersion(ApiVersions.V1)]
+    [Route("api/v{version:apiVersion}/bookings")]
     [ApiController]
+    [Authorize]
     public class BookingsController : ControllerBase
     {
         private readonly ISender _sender;

@@ -4,12 +4,14 @@ using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BookStore.Domain.Abstractions
 {
     public class Result
     {
+        [JsonConstructor]
         protected internal Result(bool isSuccess, Error error)
         {
             if (isSuccess && error != Error.None)
@@ -41,6 +43,7 @@ namespace BookStore.Domain.Abstractions
     {
         private readonly TValue? _value;
 
+        [JsonConstructor]
         protected internal Result(TValue? value, bool isSuccess, Error error) : base(isSuccess, error)
         {
             _value = value;

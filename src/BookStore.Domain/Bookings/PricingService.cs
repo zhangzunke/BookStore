@@ -28,13 +28,13 @@ namespace BookStore.Domain.Bookings
                 };
             }
 
-            var amenitiesUpCharge = Money.Zero();
+            var amenitiesUpCharge = Money.Zero(currency);
             if (percentageUpCharge > 0)
             {
                 amenitiesUpCharge = new Money(priceForPeriod.Amount * percentageUpCharge, currency);
             }
 
-            var totalPrice = Money.Zero();
+            var totalPrice = Money.Zero(currency);
             totalPrice += priceForPeriod;
             if(!apartment.CleaningFee.IsZero())
             {

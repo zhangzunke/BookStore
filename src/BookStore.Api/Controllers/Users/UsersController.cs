@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Users.GetLoggedInUser;
+﻿using Asp.Versioning;
+using BookStore.Application.Users.GetLoggedInUser;
 using BookStore.Application.Users.LoginUser;
 using BookStore.Application.Users.RegisterUser;
 using BookStore.Infrastructure.Authorization;
@@ -9,7 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Api.Controllers.Users
 {
-    [Route("api/users")]
+    [ApiVersion(ApiVersions.V1)]
+    [ApiVersion(ApiVersions.V2)]
+    [Route("api/v{version:apiVersion}/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {

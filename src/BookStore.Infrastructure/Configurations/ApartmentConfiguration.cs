@@ -2,6 +2,7 @@
 using BookStore.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace BookStore.Infrastructure.Configurations
 {
     internal sealed class ApartmentConfiguration : IEntityTypeConfiguration<Apartment>
     {
+        internal static readonly char[] separator = [','];
+
         public void Configure(EntityTypeBuilder<Apartment> builder)
         {
             builder.ToTable("Apartments");
@@ -36,6 +39,11 @@ namespace BookStore.Infrastructure.Configurations
                 priceBuilder.Property(money => money.Currency)
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
             });
+
+            builder.Property(x => x.Amenities)
+                   .HasConversion(
+                        amenities => string.Join(",", amenities.Select(a => (int)a)),
+                        dbValue => dbValue.Split(separator).Select(int.Parse).Cast<Amenity>().ToList());
 
             builder.Property<byte[]>("Version").IsRowVersion();
         }

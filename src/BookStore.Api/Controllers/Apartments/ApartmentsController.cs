@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Apartments.SearchApartments;
+﻿using Asp.Versioning;
+using BookStore.Application.Apartments.SearchApartments;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookStore.Api.Controllers.Apartments
 {
     [Authorize]
-    [Route("api/apartments")]
+    [ApiVersion(ApiVersions.V1)]
+    [Route("api/v{version:apiVersion}/apartments")]
     [ApiController]
     public class ApartmentsController : ControllerBase
     {

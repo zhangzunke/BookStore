@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BookStore.Application.Bookings.GetBooking
 {
     public sealed class BookingResponse
     {
+        [JsonConstructor]
+        public BookingResponse() 
+        {
+        
+        }
         public Guid Id { get; init; }
         public Guid UserId { get; init; }
         public Guid ApartmentId { get; init; }
