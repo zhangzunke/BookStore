@@ -7,5 +7,5 @@ using BookStore.Domain.Abstractions;
 
 namespace BookStore.Domain.Bookings.Events
 {
-    public record BookingRejectedDomainEvent(Guid BookingId) : IDomainEvent;
+    public sealed record BookingRejectedDomainEvent(Guid BookingId) : IDomainEvent;
 }
