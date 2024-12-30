@@ -60,5 +60,11 @@ namespace BookStore.Domain.Reviews
 
             return review;
         }
+
+        public void Update(Rating rating, Comment comment)
+        {
+            Rating = rating;
+            Comment = comment;
+        }
     }
 }

@@ -1,6 +1,11 @@
 ﻿using BookStore.Application.Abstractions.Clock;
+using BookStore.Application.Abstractions.Data;
 using BookStore.Application.Exceptions;
 using BookStore.Domain.Abstractions;
+using BookStore.Domain.Apartments;
+using BookStore.Domain.Bookings;
+using BookStore.Domain.Reviews;
+using BookStore.Domain.Users;
 using BookStore.Infrastructure.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Infrastructure
 {
-    public sealed class ApplicationDbContext : DbContext, IUnitOfWork
+    public sealed class ApplicationDbContext : DbContext, IUnitOfWork, IApplicationDbContext
     {
         private static readonly JsonSerializerSettings JsonSerializerSettings = new()
         {
@@ -22,6 +27,15 @@ namespace BookStore.Infrastructure
 
         private readonly IDateTimeProvider _dateTimeProvider;
         //private readonly IPublisher _publisher;
+
+        public DbSet<Apartment> Apartments { get; private set; }
+
+        public DbSet<Booking> Bookings { get; private set; }
+
+        public DbSet<Review> Reviews { get; private set; }
+
+        public DbSet<User> Users { get; private set; }
+
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,

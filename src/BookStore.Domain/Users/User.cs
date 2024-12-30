@@ -38,5 +38,11 @@ namespace BookStore.Domain.Users
         }
 
         public void SetIdentityId(string identityId) => IdentityId = identityId;
+
+        public void Update(FirstName firstName, LastName lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
 }

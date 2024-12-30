@@ -26,5 +26,10 @@ namespace BookStore.Infrastructure.Repositories
         {
             DbContext.Add(entity);
         }
+
+        public virtual void Remove(T entity)
+        {
+            DbContext.Remove(entity);
+        }
     }
 }
