@@ -2,6 +2,8 @@
 using BookStore.Application.Users.GetLoggedInUser;
 using BookStore.Application.Users.LoginUser;
 using BookStore.Application.Users.RegisterUser;
+using BookStore.Application.Users.UpdateUser;
+using BookStore.Domain.Abstractions;
 using BookStore.Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -67,5 +69,23 @@ namespace BookStore.Api.Controllers.Users
             return Ok(result.Value);
         }
 
+        [HttpPut("profile")]
+        [HasPermission(Permissions.UsersRead)]
+        public async Task<IActionResult> UpdateProfile(UpdateUserProfileRequest request, CancellationToken cancellationToken)
+        {
+            var command = new UpdateUserProfileCommand(
+                    request.UserId,
+                    request.FirstName,
+                    request.LastName);
+
+            Result result = await _sender.Send(command, cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+
+            return Ok();
+        }
     }
 }

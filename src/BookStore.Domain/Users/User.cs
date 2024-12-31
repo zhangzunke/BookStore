@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Users
 {
-    public sealed class User: Entity
+    public sealed class User: Entity<UserId>
     {
         private readonly List<Role> _roles = new();
-        private User(Guid id, FirstName firstName, LastName lastName, Email email) :
+        private User(UserId id, FirstName firstName, LastName lastName, Email email) :
             base(id) 
         {
             FirstName = firstName;
@@ -29,7 +29,7 @@ namespace BookStore.Domain.Users
         public IReadOnlyCollection<Role> Roles => _roles.ToList();
         public static User CreateUser(FirstName firstName, LastName lastName, Email email)
         {
-            var user = new User(Guid.NewGuid(), firstName, lastName, email);
+            var user = new User(UserId.New(), firstName, lastName, email);
             user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
 
             user._roles.Add(Role.Registered);

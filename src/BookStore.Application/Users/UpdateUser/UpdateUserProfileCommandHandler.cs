@@ -24,7 +24,7 @@ namespace BookStore.Application.Users.UpdateUser
 
         public async Task<Result> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+            User? user = await _userRepository.GetByIdAsync(new UserId(request.UserId), cancellationToken);
 
             if (user is null)
             {

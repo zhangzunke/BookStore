@@ -31,7 +31,7 @@ namespace BookStore.Application.Bookings.ConfirmBooking
             ConfirmBookingCommand request,
             CancellationToken cancellationToken)
         {
-            Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+            Booking? booking = await _bookingRepository.GetByIdAsync(new BookingId(request.BookingId), cancellationToken);
 
             if (booking is null)
             {

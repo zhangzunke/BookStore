@@ -18,6 +18,10 @@ namespace BookStore.Infrastructure.Configurations
         {
             builder.ToTable("Reviews");
             builder.HasKey(x => x.Id);
+
+            builder.Property(review => review.Id)
+                .HasConversion(reviewId => reviewId.Value, value => new ReviewId(value));
+
             builder.Property(x => x.Rating)
                 .HasConversion(rating => rating.Value, value => Rating.Create(value).Value);
 

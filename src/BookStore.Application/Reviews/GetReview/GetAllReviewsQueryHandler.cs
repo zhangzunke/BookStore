@@ -24,10 +24,10 @@ namespace BookStore.Application.Reviews.GetReview
             List<ReviewResponse> reviews = await _context.Reviews
                 .Select(r => new ReviewResponse
                 {
-                    Id = r.Id,
-                    ApartmentId = r.ApartmentId,
-                    BookingId = r.BookingId,
-                    UserId = r.UserId,
+                    Id = r.Id.Value,
+                    ApartmentId = r.ApartmentId.Value,
+                    BookingId = r.BookingId.Value,
+                    UserId = r.UserId.Value,
                     Rating = r.Rating.Value,
                     Comment = r.Comment.Value,
                     CreatedOnUtc = r.CreatedOnUtc

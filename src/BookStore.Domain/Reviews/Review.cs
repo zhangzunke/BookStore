@@ -5,18 +5,20 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using BookStore.Domain.Abstractions;
+using BookStore.Domain.Apartments;
 using BookStore.Domain.Bookings;
 using BookStore.Domain.Reviews.Events;
+using BookStore.Domain.Users;
 
 namespace BookStore.Domain.Reviews
 {
-    public sealed class Review : Entity
+    public sealed class Review : Entity<ReviewId>
     {
         private Review(
-            Guid id,
-            Guid apartmentId,
-            Guid bookingId,
-            Guid userId,
+            ReviewId id,
+            ApartmentId apartmentId,
+            BookingId bookingId,
+            UserId userId,
             Rating rating,
             Comment comment,
             DateTime createdOnUtc)
@@ -34,13 +36,17 @@ namespace BookStore.Domain.Reviews
         {
         }
 
-        public Guid ApartmentId { get; private set; }
-        public Guid BookingId { get; private set; }
-        public Guid UserId { get; private set; }
+        public ApartmentId ApartmentId { get; private set; }
+        public BookingId BookingId { get; private set; }
+        public UserId UserId { get; private set; }
         public Rating Rating { get; private set; }
         public Comment Comment { get; private set; }
         public DateTime CreatedOnUtc { get; private set; }
-        public static Result<Review> Create(Booking booking, Rating rating, Comment comment, DateTime createdOnUtc)
+        public static Result<Review> Create(
+            Booking booking, 
+            Rating rating, 
+            Comment comment, 
+            DateTime createdOnUtc)
         {
             if (booking.Status != BookingStatus.Completed)
             {
@@ -48,7 +54,7 @@ namespace BookStore.Domain.Reviews
             }
 
             var review = new Review(
-                Guid.NewGuid(),
+                ReviewId.New(),
                 booking.ApartmentId,
                 booking.Id,
                 booking.UserId,

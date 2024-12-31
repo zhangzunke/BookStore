@@ -27,7 +27,7 @@ namespace BookStore.Application.Bookings.CompleteBooking
         }
         public async Task<Result> Handle(CompleteBookingCommand request, CancellationToken cancellationToken)
         {
-            Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+            Booking? booking = await _bookingRepository.GetByIdAsync(new BookingId(request.BookingId), cancellationToken);
 
             if (booking is null)
             {

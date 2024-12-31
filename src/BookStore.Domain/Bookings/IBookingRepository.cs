@@ -9,7 +9,7 @@ namespace BookStore.Domain.Bookings
 {
     public interface IBookingRepository
     {
-        Task<Booking?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Booking?> GetByIdAsync(BookingId id, CancellationToken cancellationToken = default);
         Task<bool> IsOverlappingAsync(Apartment apartment, DateRange dateRange, CancellationToken cancellationToken = default);
         void Add(Booking booking);
     }

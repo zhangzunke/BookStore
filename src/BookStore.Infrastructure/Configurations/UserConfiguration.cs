@@ -14,7 +14,10 @@ namespace BookStore.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users");
-            builder.HasKey(t => t.Id);
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id)
+                .HasConversion(userId => userId.Value, value => new UserId(value));
 
             builder.Property(x => x.FirstName)
                 .HasMaxLength(200)

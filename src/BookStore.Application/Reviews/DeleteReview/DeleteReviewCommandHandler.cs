@@ -24,7 +24,7 @@ namespace BookStore.Application.Reviews.DeleteReview
 
         public async Task<Result> Handle(DeleteReviewCommand request, CancellationToken cancellationToken)
         {
-            Review? review = await _reviewRepository.GetByIdAsync(request.ReviewId, cancellationToken);
+            Review? review = await _reviewRepository.GetByIdAsync(new ReviewId(request.ReviewId), cancellationToken);
 
             if(review is null)
             {

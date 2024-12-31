@@ -18,6 +18,10 @@ namespace BookStore.Infrastructure.Configurations
         {
             builder.ToTable("Bookings");
             builder.HasKey(x => x.Id);
+
+            builder.Property(booking => booking.Id)
+                .HasConversion(bookingId => bookingId.Value, value => new BookingId(value));
+
             builder.OwnsOne(x => x.PriceForPeriod, builder => 
             {
                 builder.Property(money => money.Currency)

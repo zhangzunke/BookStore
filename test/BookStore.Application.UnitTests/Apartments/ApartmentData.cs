@@ -11,7 +11,7 @@ namespace BookStore.Application.UnitTests.Apartments
     internal static class ApartmentData
     {
         public static Apartment Create() => new(
-            Guid.NewGuid(),
+            ApartmentId.New(),
             new Name("Test apartment"),
             new Description("Test description"),
             new Address("Country", "State", "ZipCode", "City", "Street"),

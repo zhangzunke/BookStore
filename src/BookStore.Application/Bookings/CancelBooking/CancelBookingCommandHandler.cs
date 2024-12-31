@@ -29,7 +29,7 @@ namespace BookStore.Application.Bookings.CancelBooking
 
         public async Task<Result> Handle(CancelBookingCommand request, CancellationToken cancellationToken)
         {
-            var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+            var booking = await _bookingRepository.GetByIdAsync(new BookingId(request.BookingId), cancellationToken);
 
             if (booking is null)
             {

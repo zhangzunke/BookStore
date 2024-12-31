@@ -19,6 +19,10 @@ namespace BookStore.Infrastructure.Configurations
         {
             builder.ToTable("Apartments");
             builder.HasKey(x => x.Id);
+
+            builder.Property(apartment => apartment.Id)
+                .HasConversion(apartmentId => apartmentId.Value, value => new ApartmentId(value));
+
             builder.OwnsOne(x => x.Address);
             builder.Property(x => x.Name)
                 .HasMaxLength(200)

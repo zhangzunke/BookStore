@@ -7,15 +7,16 @@ using BookStore.Domain.Abstractions;
 using BookStore.Domain.Apartments;
 using BookStore.Domain.Bookings.Events;
 using BookStore.Domain.Shared;
+using BookStore.Domain.Users;
 
 namespace BookStore.Domain.Bookings
 {
-    public sealed class Booking : Entity
+    public sealed class Booking : Entity<BookingId>
     {
         private Booking(
-            Guid id,
-            Guid apartmentId,
-            Guid userId,
+            BookingId id,
+            ApartmentId apartmentId,
+            UserId userId,
             DateRange duration,
             Money priceForPeriod,
             Money cleaningFee,
@@ -39,8 +40,8 @@ namespace BookStore.Domain.Bookings
         {
         }
 
-        public Guid ApartmentId { get; private set; }
-        public Guid UserId { get; private set; }
+        public ApartmentId ApartmentId { get; private set; }
+        public UserId UserId { get; private set; }
         public DateRange Duration { get; private set; }
         public Money PriceForPeriod { get; private set; }
         public Money CleaningFee { get; private set; }
@@ -53,14 +54,14 @@ namespace BookStore.Domain.Bookings
         public DateTime? CompletedOnUtc { get; private set; }
         public DateTime? CancelledOnUtc { get; private set; }
         public static Booking Reserve(Apartment apartment,
-            Guid userId,
+            UserId userId,
             DateRange duration,
             DateTime utcNow,
             PricingService pricingService)
         {
             var pricingDetails = pricingService.CalculatePrice(apartment, duration);
             var booking = new Booking(
-                Guid.NewGuid(),
+                BookingId.New(),
                 apartment.Id,
                 userId,
                 duration,

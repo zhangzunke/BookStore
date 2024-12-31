@@ -35,7 +35,7 @@ namespace BookStore.Infrastructure.Authorization
                 .Where(u => u.IdentityId == identityId)
                 .Select(u => new UserRoleResponse
                 {
-                    UserId = u.Id,
+                    UserId = u.Id.Value,
                     Roles = u.Roles.ToList()
                 })
                 .FirstAsync();

@@ -55,7 +55,7 @@ namespace BookStore.Application.UnitTests.Bookings
         public async Task Handle_Should_ReturnFailure_WhenUserIsNull()
         {
             // Arrange
-            _userRepositoryMock.GetByIdAsync(Command.UserId, Arg.Any<CancellationToken>())
+            _userRepositoryMock.GetByIdAsync(new UserId(Command.UserId), Arg.Any<CancellationToken>())
                 .Returns((User?)null);
 
             // Act
@@ -70,10 +70,10 @@ namespace BookStore.Application.UnitTests.Bookings
         {
             // Arrange
             var user = UserData.Create();
-            _userRepositoryMock.GetByIdAsync(Command.UserId, Arg.Any<CancellationToken>())
+            _userRepositoryMock.GetByIdAsync(new UserId(Command.UserId), Arg.Any<CancellationToken>())
                 .Returns(user);
 
-            _apartmentRepositoryMock.GetByIdAsync(Command.ApartmentId, Arg.Any<CancellationToken>())
+            _apartmentRepositoryMock.GetByIdAsync(new ApartmentId(Command.ApartmentId), Arg.Any<CancellationToken>())
                 .Returns((Apartment?)null);
 
             // Act
@@ -91,10 +91,10 @@ namespace BookStore.Application.UnitTests.Bookings
             var apartment = ApartmentData.Create();
             var duration = DateRange.Create(Command.StartDate, Command.EndDate);
 
-            _userRepositoryMock.GetByIdAsync(Command.UserId, Arg.Any<CancellationToken>())
+            _userRepositoryMock.GetByIdAsync(new UserId(Command.UserId), Arg.Any<CancellationToken>())
                 .Returns(user);
 
-            _apartmentRepositoryMock.GetByIdAsync(Command.ApartmentId, Arg.Any<CancellationToken>())
+            _apartmentRepositoryMock.GetByIdAsync(new ApartmentId(Command.ApartmentId), Arg.Any<CancellationToken>())
                 .Returns(apartment);
 
             _bookingRepositoryMock.IsOverlappingAsync(apartment, duration, Arg.Any<CancellationToken>())
@@ -115,10 +115,10 @@ namespace BookStore.Application.UnitTests.Bookings
             var apartment = ApartmentData.Create();
             var duration = DateRange.Create(Command.StartDate, Command.EndDate);
 
-            _userRepositoryMock.GetByIdAsync(Command.UserId, Arg.Any<CancellationToken>())
+            _userRepositoryMock.GetByIdAsync(new UserId(Command.UserId), Arg.Any<CancellationToken>())
                 .Returns(user);
 
-            _apartmentRepositoryMock.GetByIdAsync(Command.ApartmentId, Arg.Any<CancellationToken>())
+            _apartmentRepositoryMock.GetByIdAsync(new ApartmentId(Command.ApartmentId), Arg.Any<CancellationToken>())
                 .Returns(apartment);
 
             _bookingRepositoryMock.IsOverlappingAsync(apartment, duration, Arg.Any<CancellationToken>())
@@ -142,11 +142,11 @@ namespace BookStore.Application.UnitTests.Bookings
             var duration = DateRange.Create(Command.StartDate, Command.EndDate);
 
             _userRepositoryMock
-                .GetByIdAsync(Command.UserId, Arg.Any<CancellationToken>())
+                .GetByIdAsync(new UserId(Command.UserId), Arg.Any<CancellationToken>())
                 .Returns(user);
 
             _apartmentRepositoryMock
-                .GetByIdAsync(Command.ApartmentId, Arg.Any<CancellationToken>())
+                .GetByIdAsync(new ApartmentId(Command.ApartmentId), Arg.Any<CancellationToken>())
                 .Returns(apartment);
 
             _bookingRepositoryMock
@@ -169,11 +169,11 @@ namespace BookStore.Application.UnitTests.Bookings
             var duration = DateRange.Create(Command.StartDate, Command.EndDate);
 
             _userRepositoryMock
-                .GetByIdAsync(Command.UserId, Arg.Any<CancellationToken>())
+                .GetByIdAsync(new UserId(Command.UserId), Arg.Any<CancellationToken>())
                 .Returns(user);
 
             _apartmentRepositoryMock
-                .GetByIdAsync(Command.ApartmentId, Arg.Any<CancellationToken>())
+                .GetByIdAsync(new ApartmentId(Command.ApartmentId), Arg.Any<CancellationToken>())
                 .Returns(apartment);
 
             _bookingRepositoryMock
@@ -184,7 +184,7 @@ namespace BookStore.Application.UnitTests.Bookings
             var result = await _handler.Handle(Command, default);
 
             // Assert
-            _bookingRepositoryMock.Received(1).Add(Arg.Is<Booking>(b => b.Id == result.Value));
+            _bookingRepositoryMock.Received(1).Add(Arg.Is<Booking>(b => b.Id == new BookingId(result.Value)));
         }
     }
 }

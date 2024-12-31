@@ -30,7 +30,7 @@ namespace BookStore.Application.Bookings.RejectBooking
             RejectBookingCommand request,
             CancellationToken cancellationToken)
         {
-            Booking? booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken);
+            Booking? booking = await _bookingRepository.GetByIdAsync(new BookingId(request.BookingId), cancellationToken);
 
             if (booking is null)
             {

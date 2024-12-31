@@ -24,7 +24,7 @@ namespace BookStore.Application.Apartments.UpdateApartments
         }
         public async Task<Result> Handle(UpdateApartmentCommand request, CancellationToken cancellationToken)
         {
-            Apartment? apartment = await _apartmentRepository.GetByIdAsync(request.ApartmentId, cancellationToken);
+            Apartment? apartment = await _apartmentRepository.GetByIdAsync(new ApartmentId(request.ApartmentId), cancellationToken);
 
             if (apartment is null)
             {

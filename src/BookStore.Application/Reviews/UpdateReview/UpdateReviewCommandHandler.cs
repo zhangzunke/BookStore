@@ -24,7 +24,7 @@ namespace BookStore.Application.Reviews.UpdateReview
 
         public async Task<Result> Handle(UpdateReviewCommand request, CancellationToken cancellationToken)
         {
-            Review? review = await _reviewRepository.GetByIdAsync(request.ReviewId, cancellationToken);
+            Review? review = await _reviewRepository.GetByIdAsync(new ReviewId(request.ReviewId), cancellationToken);
 
             if (review is null)
             {

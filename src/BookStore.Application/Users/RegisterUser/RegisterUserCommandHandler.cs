@@ -41,7 +41,7 @@ namespace BookStore.Application.Users.RegisterUser
 
             await _unitOfWork.SaveChangesAsync();
 
-            return user.Id;
+            return user.Id.Value;
         }
     }
 }

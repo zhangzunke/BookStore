@@ -44,7 +44,7 @@ namespace BookStore.ArchitectureTests.Domain
         {
             var entityTypes = Types.InAssembly(DomainAssembly)
                 .That()
-                .Inherit(typeof(Entity))
+                .Inherit(typeof(IEntity))
                 .GetTypes();
 
             var failingTypes = new List<Type>();

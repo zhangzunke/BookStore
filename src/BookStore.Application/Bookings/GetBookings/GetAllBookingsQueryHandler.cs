@@ -2,6 +2,7 @@
 using BookStore.Application.Abstractions.Data;
 using BookStore.Application.Abstractions.Messaging;
 using BookStore.Domain.Abstractions;
+using BookStore.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,12 @@ namespace BookStore.Application.Bookings.GetBookings
         public async Task<Result<IReadOnlyList<BookingResponse>>> Handle(GetAllBookingsQuery request, CancellationToken cancellationToken)
         {
             List<BookingResponse> bookings = await _context.Bookings
-                .Where(b => b.UserId == _userContext.UserId)
+                .Where(b => b.UserId == new UserId(_userContext.UserId))
                 .Select(b => new BookingResponse
                 {
-                    Id = b.Id,
-                    ApartmentId = b.ApartmentId,
-                    UserId = b.UserId,
+                    Id = b.Id.Value,
+                    ApartmentId = b.ApartmentId.Value,
+                    UserId = b.UserId.Value,
                     Status = (int)b.Status,
                     PriceAmount = b.PriceForPeriod.Amount,
                     PriceCurrency = b.PriceForPeriod.Currency.Code,

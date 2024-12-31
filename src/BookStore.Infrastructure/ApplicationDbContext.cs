@@ -95,7 +95,7 @@ namespace BookStore.Infrastructure
         private void AddDomainEventsAsOutboxMessages()
         {
             var outboxMessages = ChangeTracker
-                .Entries<Entity>()
+                .Entries<IEntity>()
                 .Select(entry => entry.Entity)
                 .SelectMany(entity =>
                 {

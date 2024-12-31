@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Domain.Reviews;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace BookStore.Domain.Users
 {
     public interface IUserRepository
     {
-        Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<User?> GetByIdAsync(UserId id, CancellationToken cancellationToken = default);
         void Add(User user);
     }
 }

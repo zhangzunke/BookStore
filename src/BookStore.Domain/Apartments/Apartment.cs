@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.Domain.Apartments
 {
-    public sealed class Apartment : Entity
+    public sealed class Apartment : Entity<ApartmentId>
     {
         public Apartment(
-            Guid id,
+            ApartmentId id,
             Name name,
             Description description,
             Address address,
@@ -49,7 +49,7 @@ namespace BookStore.Domain.Apartments
             Amenity[] amenities)
         {
             var apartment = new Apartment(
-                Guid.NewGuid(),
+                ApartmentId.New(),
                 name,
                 description,
                 address,
