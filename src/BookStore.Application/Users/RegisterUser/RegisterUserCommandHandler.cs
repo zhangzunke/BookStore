@@ -29,7 +29,7 @@ namespace BookStore.Application.Users.RegisterUser
 
         public async Task<Result<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = User.CreateUser(new FirstName(request.FirstName),
+            var user = User.Create(new FirstName(request.FirstName),
                 new LastName(request.LastName),
                 new Email(request.Email));
 

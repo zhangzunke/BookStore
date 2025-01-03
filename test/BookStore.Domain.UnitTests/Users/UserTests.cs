@@ -16,7 +16,7 @@ namespace BookStore.Domain.UnitTests.Users
         public void Create_Should_SetPropertyValue()
         {
             // Act
-            var user = User.CreateUser(UserData.FirstName, UserData.LastName, UserData.Email);
+            var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
 
             // Assert
             user.FirstName.Should().Be(UserData.FirstName);
@@ -28,7 +28,7 @@ namespace BookStore.Domain.UnitTests.Users
         public void Create_Should_RaiseUserCreatedDomainEvent()
         {
             // Act
-            var user = User.CreateUser(UserData.FirstName, UserData.LastName, UserData.Email);
+            var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
 
             // Assert
             var userCreatedDomainEvent = AssertDomainEventWasPublished<UserCreatedDomainEvent>(user);
@@ -40,7 +40,7 @@ namespace BookStore.Domain.UnitTests.Users
         public void Create_Should_AddRegisteredRoleToUser()
         {
             // Act
-            var user = User.CreateUser(UserData.FirstName, UserData.LastName, UserData.Email);
+            var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
 
             // Assert
             user.Roles.Should().Contain(Role.Registered);
