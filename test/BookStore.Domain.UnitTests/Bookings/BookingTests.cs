@@ -21,7 +21,7 @@ namespace BookStore.Domain.UnitTests.Bookings
         public void Reserve_Should_RaiseBookingReservedDomainEvent()
         {
             // Arrange
-            var user = User.CreateUser(UserData.FirstName, UserData.LastName, UserData.Email);
+            var user = User.Create(UserData.FirstName, UserData.LastName, UserData.Email);
             var price = new Money(10.0m, Currency.Usd);
             var duration = DateRange.Create(new DateOnly(2024, 1, 1), new DateOnly(2024, 1, 10));
             var apartment = ApartmentData.Create(price);
